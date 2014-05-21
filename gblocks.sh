@@ -18,12 +18,16 @@ done
 # Change extension from .afa.gb to _gb.afa
 for i in *.afa.gb;
 do
-	mv "$i" "${i/.afa.gb}"_gb.afa
+	tr -d " \t" < "$i" > "${i/.afa.gb}"_gb.afa
+
+	#mv "$i" "${i/.afa.gb}"_gb.afa
 done
+
+rm *.afa.gb
 
 # Gblocks outputs an alignment file of 10-character blocks seperated by white space
 # Need to delete the white spaces
-for i in *_gb.afa;
-do
-	cat $i | tr -d " \t" 
-done
+#for i in *_gb.afa;
+#do
+#	cat $i | tr -d " \t" 
+#done
