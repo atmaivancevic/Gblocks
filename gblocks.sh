@@ -9,25 +9,20 @@
 cd /Users/atma/GenomeAnalysis/Fulllength_L1s/Clusters/$1
 
 # Get blocks of conserved sequence from each alignment file
-# Note: Allowed Gap Positions is currently set to None (to change, set -b5= h (half) or a (all))
+# Note: Allowed Gap Positions is by default set to None (to change, set -b5= h (half) or a (all))
 for i in *.afa;
 do
-	Gblocks $i -t=d -p=n -e=.gb
+	Gblocks $i -t=d -p=n -e=.gb -b5=h
 done	
 
-# Change extension from .afa.gb to _gb.afa
+# Gblocks outputs an alignment file of 10-character blocks separated by white space
+# Need to delete the white spaces
+# Also change extension from .afa.gb to _gb.afa 
 for i in *.afa.gb;
 do
-	tr -d " \t" < "$i" > "${i/.afa.gb}"_gb.afa
-
-	#mv "$i" "${i/.afa.gb}"_gb.afa
+	tr -d " \t" < "$i" > "${i/.afa.gb}"_gbHalf.afa #changed extension to gbHalf
 done
 
+# Remove all files with white space and extension .afa.gb
 rm *.afa.gb
 
-# Gblocks outputs an alignment file of 10-character blocks seperated by white space
-# Need to delete the white spaces
-#for i in *_gb.afa;
-#do
-#	cat $i | tr -d " \t" 
-#done
